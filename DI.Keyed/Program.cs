@@ -17,45 +17,48 @@ public static class Program
 
         using var scope = rootServiceProvider.CreateScope();
 
-        var allNotificationServices = scope.ServiceProvider.GetServices<INotificationService>().ToArray();
-        Console.WriteLine($"There are {allNotificationServices.Length} registered non-keyed services.");
-        foreach (var service in allNotificationServices) Console.WriteLine(TypeNames.Get(service.GetType()));
+        var allPaymentServices = scope.ServiceProvider.GetServices<IPaymentService>().ToArray();
+        Console.WriteLine($"There are {allPaymentServices.Length} registered non-keyed services.");
+        foreach (var service in allPaymentServices) Console.WriteLine(TypeNames.Get(service.GetType()));
 
-        var allKeyedNotificationServices = scope.ServiceProvider.GetKeyedServices<INotificationService>("_default").ToArray();
-        Console.WriteLine($"There are {allKeyedNotificationServices.Length} registered services for the \"_default\" key.");
-        foreach (var service in allKeyedNotificationServices) Console.WriteLine(TypeNames.Get(service.GetType()));
+        var allKeyedPaymentServices = scope.ServiceProvider.GetKeyedServices<IPaymentService>("_default").ToArray();
+        Console.WriteLine($"There are {allKeyedPaymentServices.Length} registered services for the \"_default\" key.");
+        foreach (var service in allKeyedPaymentServices) Console.WriteLine(TypeNames.Get(service.GetType()));
 
-        if (allNotificationServices.Length > 0)
+        if (allPaymentServices.Length > 0)
         {
             // The following line will always resolve the last registered service of type INotificationService..
-            var defaultNotificationService = scope.ServiceProvider.GetRequiredService<INotificationService>();
-            Console.WriteLine($"The type of the default non-keyed notification service is: {TypeNames.Get(defaultNotificationService.GetType())}");
-            await defaultNotificationService.SendAsync("Tony Troeff", "Hello, world!");
+            var defaultPaymentService = scope.ServiceProvider.GetRequiredService<IPaymentService>();
+            Console.WriteLine($"The type of the default non-keyed payment service is: {TypeNames.Get(defaultPaymentService.GetType())}");
+            await defaultPaymentService.ProcessPaymentAsync("Tony Troeff", "Hello, world!");
         }
 
-        Console.Write("Enter the type of notification to send: ");
-        var notificationType = Console.ReadLine()!;
+        Console.Write("Enter the key of the requested payment service: ");
+        var paymentServiceKey = Console.ReadLine()!;
 
-        var requestedNotificationService = scope.ServiceProvider.GetRequiredKeyedService<INotificationService>(notificationType);
-        Console.WriteLine($"The type of the requested notification service is: {TypeNames.Get(requestedNotificationService.GetType())}");
-        await requestedNotificationService.SendAsync("Tony Troeff", "Hello, world!");
+        var requestedPaymentService = scope.ServiceProvider.GetRequiredKeyedService<IPaymentService>(paymentServiceKey);
+        Console.WriteLine($"The type of the requested payment service is: {TypeNames.Get(requestedPaymentService.GetType())}");
+        await requestedPaymentService.ProcessPaymentAsync("Tony Troeff", "Hello, world!");
     }
 
     private static ServiceProvider BuildServices()
     {
         var serviceCollection = new ServiceCollection();
-        // serviceCollection.AddScoped<INotificationService, SmsNotificationService>();
-        // serviceCollection.AddScoped<INotificationService, EmailNotificationService>();
+        // serviceCollection.AddScoped<IPaymentService, ApplePayPaymentService>();
+        // serviceCollection.AddScoped<IPaymentService, CreditCardPaymentService>();
+        // serviceCollection.AddScoped<IPaymentService, GooglePayPaymentService>();
 
-        // serviceCollection.AddKeyedScoped<INotificationService, SmsNotificationService>("_default");
-        // serviceCollection.AddKeyedScoped<INotificationService, EmailNotificationService>("_default");
+        serviceCollection.AddKeyedScoped<IPaymentService, ApplePayPaymentService>("_default");
+        serviceCollection.AddKeyedScoped<IPaymentService, CreditCardPaymentService>("_default");
+        serviceCollection.AddKeyedScoped<IPaymentService, GooglePayPaymentService>("_default");
 
-        // serviceCollection.AddKeyedScoped<INotificationService, SmsNotificationService>("sms");
-        // serviceCollection.AddKeyedScoped<INotificationService, EmailNotificationService>("email");
+        serviceCollection.AddKeyedScoped<IPaymentService, ApplePayPaymentService>("apple_pay");
+        serviceCollection.AddKeyedScoped<IPaymentService, CreditCardPaymentService>("credit_card");
+        serviceCollection.AddKeyedScoped<IPaymentService, GooglePayPaymentService>("google_pay");
 
-        IServiceRegistrar registrar = new ServiceRegistrar(serviceCollection, new HierarchyScanner());
-        Assembly[] allAssemblies = [Assembly.GetExecutingAssembly()];
-        allAssemblies.AutoRegisterServices(registrar);
+        // IServiceRegistrar registrar = new ServiceRegistrar(serviceCollection, new HierarchyScanner());
+        // Assembly[] allAssemblies = [Assembly.GetExecutingAssembly()];
+        // allAssemblies.AutoRegisterServices(registrar);
 
         var buildOptions = new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true };
         return serviceCollection.BuildServiceProvider(buildOptions);
