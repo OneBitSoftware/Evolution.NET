@@ -14,7 +14,7 @@ public class NamedPipesConnectionFactory
             pipeName: IpcConstants.PipeName,
             direction: PipeDirection.InOut,
             options: PipeOptions.WriteThrough | PipeOptions.Asynchronous,
-            impersonationLevel: TokenImpersonationLevel.Anonymous);
+            impersonationLevel: TokenImpersonationLevel.Impersonation);
 
         var isSuccessfullyConnected = false;
         try

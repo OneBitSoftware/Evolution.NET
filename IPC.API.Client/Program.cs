@@ -4,6 +4,7 @@ using IPC.Common;
 using IPC.Common.Greet;
 
 var builder = WebApplication.CreateSlimBuilder(args);
+builder.WebHost.UseKestrelHttpsConfiguration();
 
 var app = builder.Build();
 
