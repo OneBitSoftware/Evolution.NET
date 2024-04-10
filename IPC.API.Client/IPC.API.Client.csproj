@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <InvariantGlobalization>true</InvariantGlobalization>
+        <PublishAot>true</PublishAot>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\IPC.Common\IPC.Common.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="..\IPC.Common\Protos\greet.proto" GrpcServices="Client" Link="Protos\greet.proto"/>
+
+        <PackageReference Include="Grpc.AspNetCore" Version="2.62.0"/>
+    </ItemGroup>
+
+</Project>
