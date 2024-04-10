@@ -1,0 +1,2 @@
+Publish this project by running the following command from the root directory of the solution:
+> dotnet publish .\AoT.Simple.ClassLibrary\ -r win-x64 -c Release -o .\AoT.Simple.ClassLibrary.Consumer\dist
