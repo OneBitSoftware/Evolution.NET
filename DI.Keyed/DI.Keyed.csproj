@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="TryAtSoftware.Extensions.DependencyInjection.Standard" Version="1.1.2" />
     <PackageReference Include="TryAtSoftware.Extensions.Reflection" Version="1.1.2" />
   </ItemGroup>
 
