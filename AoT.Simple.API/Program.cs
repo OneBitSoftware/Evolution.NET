@@ -15,7 +15,12 @@ var sampleTodos = new Todo[] { new (1, "Walk the dog"), new (2, "Do the dishes",
 
 var todosApi = app.MapGroup("/todos");
 todosApi.MapGet("/", () => sampleTodos);
-todosApi.MapGet("/{id}", (int id) => sampleTodos.FirstOrDefault(a => a.Id == id) is { } todo ? Results.Ok(todo) : Results.NotFound());
+todosApi.MapGet("/{id}", (int id) =>
+{
+    var requestedTodo = sampleTodos.FirstOrDefault(a => a.Id == id);
+    if (requestedTodo is not null) return Results.Ok(requestedTodo);
+    return Results.NotFound();
+});
 
 app.Run();
 
