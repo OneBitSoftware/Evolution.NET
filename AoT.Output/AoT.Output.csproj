@@ -7,11 +7,6 @@
 		<Nullable>enable</Nullable>
 		<DebugType>None</DebugType>
 		<DebugSymbols>False</DebugSymbols>
-		<!--<PublishTrimmed>false</PublishTrimmed>
-		<PublishAot>false</PublishAot>
-		<PublishSingleFile>false</PublishSingleFile>
-		<PublishReadyToRun>false</PublishReadyToRun>
-		<PublishSelfContained>true</PublishSelfContained>-->
 	</PropertyGroup>
 
 </Project>
