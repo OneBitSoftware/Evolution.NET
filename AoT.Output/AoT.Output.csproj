@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<DebugType>None</DebugType>
+		<DebugSymbols>False</DebugSymbols>
+		<!--<PublishTrimmed>false</PublishTrimmed>
+		<PublishAot>false</PublishAot>
+		<PublishSingleFile>false</PublishSingleFile>
+		<PublishReadyToRun>false</PublishReadyToRun>
+		<PublishSelfContained>true</PublishSelfContained>-->
+	</PropertyGroup>
+
+</Project>
