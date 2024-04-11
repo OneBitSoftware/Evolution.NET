@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateSlimBuilder(args);
+builder.WebHost.UseKestrelHttpsConfiguration();
 
 builder.Services.ConfigureHttpJsonOptions(
     options =>
