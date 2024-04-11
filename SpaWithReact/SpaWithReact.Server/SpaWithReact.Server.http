@@ -1,0 +1,6 @@
+@SpaWithReact.Server_HostAddress = http://localhost:5168
+
+GET {{SpaWithReact.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
